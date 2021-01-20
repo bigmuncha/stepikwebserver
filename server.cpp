@@ -2,11 +2,10 @@
 #include <cstdlib>
 #include <boost/asio.hpp>
 #include <array>
-#include "reply.hpp"
+#include "stringtreat.hpp"
+#include <utility>
 
 using boost::asio::ip::tcp;
-
-
 
 
 class return_string {
@@ -34,9 +33,6 @@ int main(int argc, char *argv[]) {
     char data[8192];
 
 
-
-
-
     static const char templ[] = "HTTP/1.0 200 OK\r\n"
         "Content-length: 50\r\n"
         "Connection: close\r\n"
@@ -47,18 +43,9 @@ int main(int argc, char *argv[]) {
     for(;;){
     size_t length = socket.read_some(boost::asio::buffer(data));
 
-    std::string get;
-    for(int i =0;data[i] !='\r'; i++){
-        get = get + data[i];
-    }
+    std::cout << data << "\n";
 
-    std::cout <<data <<"\n";
-
-
-    std::cout << "TYT\n";
-    std::cout <<get <<"\n";
-
-    std::string neccessary = get_path(get);
+    std::string neccessary = get_path(std::move(data));
     std::cout << neccessary <<"\n";
     socket.write_some(boost::asio::buffer(templ));
 
