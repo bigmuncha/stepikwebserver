@@ -22,19 +22,20 @@ int main(int argc, char **argv) {
         tcp::endpoint endpoint =
             *resolver.resolve(opt.ip,opt.port).begin();
         acceptor_.open(endpoint.protocol());
-    acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
-    acceptor_.bind(endpoint);
-    acceptor_.listen();
-    acceptor_.accept(socket);
+        acceptor_.set_option(
+            boost::asio::ip::tcp::acceptor::reuse_address(true));
+        acceptor_.bind(endpoint);
+        acceptor_.listen();
+        acceptor_.accept(socket);
 
 
-    std::cout << "Connect YES\n";
+        std::cout << "Connect YES\n";
 
-    char data[8192];
+        char data[8192];
 
 
-    /*static const char templ[] = "HTTP/1.0 200 OK\r\n"
-        "Content-length: 50\r\n"
+        /*static const char templ[] = "HTTP/1.0 200 OK\r\n"
+          "Content-length: 50\r\n"
         "Connection: close\r\n"
         "Content-Type: text/html\r\n"
         "\r\n"
@@ -50,9 +51,9 @@ int main(int argc, char **argv) {
 
     std::cout <<hand.get_path();
 
-    std::cout << "DO WRITE ZDES\n";
+    //std::cout << "DO WRITE ZDES\n";
     socket.write_some(boost::asio::buffer(hand.get_result()));
-    std::cout <<"AFTER WRITE\n";
+    //std::cout <<"AFTER WRITE\n";
     //socket.write_some(boost::asio::buffer(con_type));
   //  socket.write_some(boost::asio::buffer("\n"));
 

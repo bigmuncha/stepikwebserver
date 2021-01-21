@@ -4,26 +4,26 @@
 void return_string::fill_the_body(char *pre_path){
     std::ifstream file;
     path_to_file =pre_path + path_to_file;
+    //pthread_create(a, b ,NULL);
+    std::cout <<"PATH\n" << path_to_file <<"\nPATH\n";
     //std::cerr <<"omar";
     std::cout <<path_to_file;
     file.open(path_to_file);
     if(!file.is_open()){
-        //std::cerr << "file";
+        std::cerr << "error open file\n";
         result = not_found404();
     }else{
-        //std::cerr <<"good \n";
-    std::string s;
-    std::string temp;
-
-
+        std::cout <<"file normal open good \n";
+        std::string s;
+        std::string temp;
     for (;!file.eof();) {
         std::getline(file, s);
         temp = temp +s;
         //std::cout <<s <<'\n';
     }
-    std::cout <<"TYT\n";
+//    std::cout <<"TYT\n";
     result = ok200(temp);
-    std::cout <<"TYT\n";
+  //  std::cout <<"TYT\n";
     }
 
     file.close();
@@ -50,10 +50,11 @@ std::string return_string::ok200(std::string str){
 std::string return_string::not_found404(){
     return
         "HTTP/1.0 404 NOT FOUND\r\n"
-        "Content-length: 0\r\n"
+        "Content-length: 23\r\n"
         "Connection: close\r\n"
         "Content-Type: text/html\r\n"
-        "\r\n";
+        "\r\n"
+        "<h>PAGE DONT FOUND</h>";
 }
 
 return_string::return_string(){
@@ -67,10 +68,17 @@ return_string::return_string(std::string data){
 
 void return_string::search_path(std::string data){
 
+
+
     std::string str;
     for(int i =0;data[i] !='\r'; i++){
 
         str = str + data[i];
+    }
+
+    if(str == "/"){
+        path_to_file = "index.html";
+        return;
     }
 
     std::string retstr;
@@ -83,15 +91,20 @@ void return_string::search_path(std::string data){
             flag++;
             continue;
         }
-        if(flag >= 2 || a=='?'){
+        if(flag >= 2 || a=='?' ){
             path_to_file =  retstr;
-            return ;
+            break;
         }if(flag ==1){
             retstr = retstr + a;
         }
 
     }
-    path_to_file =  "/";
+
+    if(path_to_file == "/"){
+        path_to_file = "/index.html";
+        return;
+    }
+
 }
 
 std::string return_string::get_path(){

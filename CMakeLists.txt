@@ -11,11 +11,11 @@ set(PARSER_LIB parser.cpp)
 add_library(stringtreat ${STRINGTREAT_LIB})
 add_library(parser ${PARSER_LIB})
 
-find_package(Boost 1.75.0 REQUIRED COMPONENTS  filesystem thread)
+find_package(Boost REQUIRED COMPONENTS  filesystem thread)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 
-  add_executable(main ${SOURCE_EXE})
+  add_executable(final ${SOURCE_EXE})
 
-  target_link_libraries(main stringtreat  parser ${Boost_LIBRARIES})
+  target_link_libraries(final stringtreat  parser ${Boost_LIBRARIES})
 endif()
