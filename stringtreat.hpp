@@ -19,12 +19,13 @@ namespace status_strings{
 class return_string {
     public:
 
-        void fill_the_body();
+        void fill_the_body(char *);
         return_string(std::string);
         return_string();
 
         std::string ok200(std::string);
         std::string not_found404();
+        std::string get_result();
         std::string get_path();
 
     private:

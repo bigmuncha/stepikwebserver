@@ -1,18 +1,59 @@
 #include "stringtreat.hpp"
 
 
-void return_string::fill_the_body(){
-    std::ofstream file;
-
+void return_string::fill_the_body(char *pre_path){
+    std::ifstream file;
+    path_to_file =pre_path + path_to_file;
+    //std::cerr <<"omar";
+    std::cout <<path_to_file;
     file.open(path_to_file);
     if(!file.is_open()){
-        std::cerr << "file";
+        //std::cerr << "file";
+        result = not_found404();
+    }else{
+        //std::cerr <<"good \n";
+    std::string s;
+    std::string temp;
 
+
+    for (;!file.eof();) {
+        std::getline(file, s);
+        temp = temp +s;
+        //std::cout <<s <<'\n';
     }
+    std::cout <<"TYT\n";
+    result = ok200(temp);
+    std::cout <<"TYT\n";
+    }
+
+    file.close();
+
+}
+
+std::string return_string::get_result(){
+    return result;
+}
+
+std::string return_string::ok200(std::string str){
+    std::string returner;
+
+    returner = status_strings::ok +
+        "Content-length:" +
+        std::to_string(str.length()) +
+        "\r\n" +
+        "Connection: close\r\n"+
+        content_type::text_html +
+        "\r\n" + str;
+    return returner;
 }
 
 std::string return_string::not_found404(){
-    return "HTTP/1.0 404 Not Found\r\nContent-Type: text/html\r\n\r\n";
+    return
+        "HTTP/1.0 404 NOT FOUND\r\n"
+        "Content-length: 0\r\n"
+        "Connection: close\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n";
 }
 
 return_string::return_string(){
@@ -21,14 +62,14 @@ return_string::return_string(){
 
 return_string::return_string(std::string data){
     search_path(data);
-
-
+    std::cout <<path_to_file <<"\n";
 }
 
 void return_string::search_path(std::string data){
 
     std::string str;
     for(int i =0;data[i] !='\r'; i++){
+
         str = str + data[i];
     }
 
@@ -37,11 +78,12 @@ void return_string::search_path(std::string data){
     char a;
     for(int i=0;i < str.length();i++){
         a=str[i];
+
         if(a == ' '){
             flag++;
             continue;
         }
-        if(flag >= 2){
+        if(flag >= 2 || a=='?'){
             path_to_file =  retstr;
             return ;
         }if(flag ==1){

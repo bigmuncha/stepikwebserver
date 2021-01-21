@@ -4,9 +4,12 @@ project(webserv)
 
 set(SOURCE_EXE server.cpp)
 
-set(SOURCE_LIB stringtreat.cpp)
+set(STRINGTREAT_LIB stringtreat.cpp)
 
-add_library(stringtreat ${SOURCE_LIB})
+set(PARSER_LIB parser.cpp)
+
+add_library(stringtreat ${STRINGTREAT_LIB})
+add_library(parser ${PARSER_LIB})
 
 find_package(Boost 1.75.0 REQUIRED COMPONENTS  filesystem thread)
 if(Boost_FOUND)
@@ -14,5 +17,5 @@ if(Boost_FOUND)
 
   add_executable(server ${SOURCE_EXE})
 
-  target_link_libraries(server stringtreat ${Boost_LIBRARIES})
+  target_link_libraries(server stringtreat  parser ${Boost_LIBRARIES})
 endif()
