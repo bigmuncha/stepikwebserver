@@ -1,17 +1,24 @@
 #include <cstdlib>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <boost/asio.hpp>
 #include "stringtreat.hpp"
-#include <unistd.h>
 #include <utility>
-#include <stdlib.h>
-#include <stdio.h>
 #include "parser.hpp"
 using boost::asio::ip::tcp;
 
 
 int main(int argc, char **argv) {
     try{
-        options opt;
+
+        pid_t pid;
+
+        pid = fork();
+
+        if(!pid){
+            umask(0);
+            setsid();
+            options opt;
         opt = parser(argc,argv);
 
 
@@ -59,7 +66,11 @@ int main(int argc, char **argv) {
 
 
 
+    return 0;
 
+        }else {
+            return 0;
+        }
 
     }
     catch(std::exception&e ){
