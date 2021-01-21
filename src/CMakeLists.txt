@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 2.8)
 
 project(webserv)
 
-set(SOURCE_EXE server.cpp)
+set(SOURCE_EXE main.cpp)
 
 set(STRINGTREAT_LIB stringtreat.cpp)
 
@@ -15,7 +15,7 @@ find_package(Boost 1.75.0 REQUIRED COMPONENTS  filesystem thread)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 
-  add_executable(server ${SOURCE_EXE})
+  add_executable(main ${SOURCE_EXE})
 
-  target_link_libraries(server stringtreat  parser ${Boost_LIBRARIES})
+  target_link_libraries(main stringtreat  parser ${Boost_LIBRARIES})
 endif()
