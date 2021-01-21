@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cstdlib>
 #include <boost/asio.hpp>
 #include <array>
@@ -8,18 +7,6 @@
 using boost::asio::ip::tcp;
 
 
-class return_string {
-    public:
-
-    private:
-        std::string code;
-        std::string lenght;
-        std::string content_type;
-        std::string body;
-        std::string prebody = "\r\n";
-        std::string lastseq = "\r\n";
-
-};
 int main(int argc, char *argv[]) {
     try{
 
@@ -45,8 +32,11 @@ int main(int argc, char *argv[]) {
 
     std::cout << data << "\n";
 
-    std::string neccessary = get_path(std::move(data));
-    std::cout << neccessary <<"\n";
+    return_string hand(data);
+    std::cout <<hand.get_path() <<'\n';
+
+
+
     socket.write_some(boost::asio::buffer(templ));
 
     //socket.write_some(boost::asio::buffer(con_type));
