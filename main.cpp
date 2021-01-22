@@ -1,16 +1,16 @@
-#include <cstdlib>
-
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <boost/asio.hpp>
-#include "stringtreat.hpp"
 #include <utility>
-#include "parser.hpp"
+#include "client_handler.hpp"
+
 using boost::asio::ip::tcp;
 
 
 int main(int argc, char **argv) {
     try{
+
+        signal(SIGHUP,SIG_IGN);
 
         pid_t pid;
 
@@ -22,48 +22,8 @@ int main(int argc, char **argv) {
             options opt;
         opt = parser(argc,argv);
 
-
         boost::asio::io_service io_service;
-        tcp::socket socket(io_service);
-        tcp::acceptor acceptor_(io_service);
-        tcp::resolver resolver(io_service);
-        tcp::endpoint end(boost::asio::ip::address::from_string(opt.ip),
-                                 atoi(opt.port));
-        acceptor_.open(end.protocol());
-        acceptor_.set_option(
-            boost::asio::ip::tcp::acceptor::reuse_address(true));
-        acceptor_.bind(end);
-        acceptor_.listen();
-        acceptor_.accept(socket);
-
-
-        std::cout << "Connect YES\n";
-
-        char data[8192];
-
-
-        /*static const char templ[] = "HTTP/1.0 200 OK\r\n"
-          "Content-length: 50\r\n"
-        "Connection: close\r\n"
-        "Content-Type: text/html\r\n"
-        "\r\n"
-        "Omar idet gulat";*/
-
-
-    size_t length = socket.read_some(boost::asio::buffer(data));
-
-    std::cout << data << "\n";
-
-    return_string hand(data);
-    hand.fill_the_body(opt.path);
-
-    std::cout <<hand.get_path();
-
-    //std::cout << "DO WRITE ZDES\n";
-    socket.write_some(boost::asio::buffer(hand.get_result()));
-    //std::cout <<"AFTER WRITE\n";
-    //socket.write_some(boost::asio::buffer(con_type));
-  //  socket.write_some(boost::asio::buffer("\n"));
+        clients_handler(io_service, opt);
 
 
 

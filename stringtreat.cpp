@@ -112,8 +112,6 @@ void return_string::search_path(std::string data){
     if(path_to_file == "/"){
         path_to_file = "/index.html";
         return;
-    }else{
-        path_to_file = "OOOOOOOOOOO";
     }
 
 }
