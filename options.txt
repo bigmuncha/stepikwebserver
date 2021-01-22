@@ -1,0 +1,7 @@
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt-get remove g++
+sudo apt-get autoremove
+sudo apt-get install g++-9
+sudo mv /usr/bin/g++-9 /usr/bin/g++
+echo https://github.com/bigmuncha/stepikwebserver > final.txt

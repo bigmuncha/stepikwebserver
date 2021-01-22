@@ -1,4 +1,5 @@
 #include <cstdlib>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <boost/asio.hpp>
@@ -22,16 +23,16 @@ int main(int argc, char **argv) {
         opt = parser(argc,argv);
 
 
-        boost::asio::io_context io_context;
-        tcp::socket socket(io_context);
-        tcp::acceptor acceptor_(io_context);
-        tcp::resolver resolver(io_context);
-        tcp::endpoint endpoint =
-            *resolver.resolve(opt.ip,opt.port).begin();
-        acceptor_.open(endpoint.protocol());
+        boost::asio::io_service io_service;
+        tcp::socket socket(io_service);
+        tcp::acceptor acceptor_(io_service);
+        tcp::resolver resolver(io_service);
+        tcp::endpoint end(boost::asio::ip::address::from_string(opt.ip),
+                                 atoi(opt.port));
+        acceptor_.open(end.protocol());
         acceptor_.set_option(
             boost::asio::ip::tcp::acceptor::reuse_address(true));
-        acceptor_.bind(endpoint);
+        acceptor_.bind(end);
         acceptor_.listen();
         acceptor_.accept(socket);
 
