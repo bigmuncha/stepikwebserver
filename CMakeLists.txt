@@ -11,7 +11,7 @@ set(PARSER_LIB parser.cpp)
 add_library(stringtreat ${STRINGTREAT_LIB})
 add_library(parser ${PARSER_LIB})
 
-find_package(Boost REQUIRED COMPONENTS  filesystem thread)
+find_package(Boost REQUIRED COMPONENTS  filesystem thread system)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 
