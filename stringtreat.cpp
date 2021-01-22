@@ -5,9 +5,14 @@ void return_string::fill_the_body(char *pre_path){
     std::ifstream file;
     path_to_file =pre_path + path_to_file;
     //pthread_create(a, b ,NULL);
+    if(path_to_file.empty()){
+        result = not_found404();
+        return;
+    }
     std::cout <<"PATH\n" << path_to_file <<"\nPATH\n";
     //std::cerr <<"omar";
     std::cout <<path_to_file;
+
     file.open(path_to_file);
     if(!file.is_open()){
         std::cerr << "error open file\n";
@@ -91,18 +96,24 @@ void return_string::search_path(std::string data){
             flag++;
             continue;
         }
-        if(flag >= 2 || a=='?' ){
+        if(flag >= 2){
             path_to_file =  retstr;
             break;
         }if(flag ==1){
+            if(a == '?'){
+                break;
+            }
             retstr = retstr + a;
         }
 
     }
 
+    std::cout <<"файл\n"<<path_to_file <<"\nfile\n";
     if(path_to_file == "/"){
         path_to_file = "/index.html";
         return;
+    }else{
+        path_to_file = "OOOOOOOOOOO";
     }
 
 }
