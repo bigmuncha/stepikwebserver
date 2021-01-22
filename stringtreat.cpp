@@ -50,11 +50,11 @@ std::string return_string::ok200(std::string str){
 std::string return_string::not_found404(){
     return
         "HTTP/1.0 404 NOT FOUND\r\n"
-        "Content-length: 23\r\n"
+        "Content-length: 0\r\n"
         "Connection: close\r\n"
         "Content-Type: text/html\r\n"
         "\r\n"
-        "<h>PAGE DONT FOUND</h>";
+        "";
 }
 
 return_string::return_string(){
