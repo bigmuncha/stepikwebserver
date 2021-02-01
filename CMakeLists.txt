@@ -14,5 +14,5 @@ add_library(parser ${PARSER_LIB})
 add_library(client_handler ${CLIENTHANDLER_LIB})
 
 
-add_executable(final ${SOURCE_EXE})
-target_link_libraries(final client_handler stringtreat  parser )
+add_executable(final ${SOURCE_EXE} )
+target_link_libraries(final client_handler stringtreat  parser pthread)
