@@ -5,6 +5,5 @@ sudo apt-get remove g++
 sudo apt-get autoremove
 sudo apt-get install g++-9
 sudo mv /usr/bin/g++-9 /usr/bin/g++
-sudo apt-get install libboost-all-dev
 sudo apt-get update
 echo https://github.com/bigmuncha/stepikwebserver > final.txt
