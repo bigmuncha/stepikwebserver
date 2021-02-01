@@ -3,36 +3,32 @@
 
 void return_string::fill_the_body(char *pre_path){
     std::ifstream file;
+
     path_to_file =pre_path + path_to_file;
-    //pthread_create(a, b ,NULL);
-    if(path_to_file.empty()){
+
+    if(path_to_file.c_str() == pre_path){
         result = not_found404();
         return;
-    }
-    std::cout <<"PATH\n" << path_to_file <<"\nPATH\n";
-    //std::cerr <<"omar";
-    std::cout <<path_to_file;
-
-    file.open(path_to_file);
-    if(!file.is_open()){
-        std::cerr << "error open file\n";
-        result = not_found404();
     }else{
-        std::cout <<"file normal open good \n";
-        std::string s;
-        std::string temp;
-    for (;!file.eof();) {
-        std::getline(file, s);
-        temp = temp +s;
-        //std::cout <<s <<'\n';
-    }
-//    std::cout <<"TYT\n";
-    result = ok200(temp);
-  //  std::cout <<"TYT\n";
-    }
+        std::cout <<"PATH\n" << path_to_file <<"\nPATH\n";
+        file.open(path_to_file);
+        if(!file.is_open()){
+            std::cerr << "error open file\n";
+            result = not_found404();
+        }else{
+            std::cout <<"file normal open\n";
+            std::string s;
+            std::string temp;
+            for (;!file.eof();) {
+                std::getline(file, s);
+                temp = temp +s;
 
-    file.close();
+            }
+            result = ok200(temp);
+        }
 
+        file.close();
+    }
 }
 
 std::string return_string::get_result(){

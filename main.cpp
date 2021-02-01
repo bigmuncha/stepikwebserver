@@ -4,7 +4,7 @@
 #include <utility>
 #include "client_handler.hpp"
 
-using boost::asio::ip::tcp;
+
 
 
 int main(int argc, char **argv) {
@@ -22,10 +22,7 @@ int main(int argc, char **argv) {
             options opt;
         opt = parser(argc,argv);
 
-        boost::asio::io_service io_service;
-        clients_handler(io_service, opt);
-
-
+        clients_handler(opt);
 
     return 0;
 
