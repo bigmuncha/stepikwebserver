@@ -13,11 +13,6 @@ add_library(stringtreat ${STRINGTREAT_LIB})
 add_library(parser ${PARSER_LIB})
 add_library(client_handler ${CLIENTHANDLER_LIB})
 
-find_package(Boost REQUIRED COMPONENTS  filesystem thread system)
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
 
-  add_executable(final ${SOURCE_EXE})
-
-  target_link_libraries(final client_handler stringtreat  parser ${Boost_LIBRARIES})
-endif()
+add_executable(final ${SOURCE_EXE})
+target_link_libraries(final client_handler stringtreat  parser )
